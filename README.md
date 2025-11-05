@@ -13,3 +13,5 @@ In this example, the starting world is
     1 0 0
     0 0 1
     0 1 0
+
+If no initial world is specified, the system will randomly generate one.
