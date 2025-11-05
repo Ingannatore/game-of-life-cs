@@ -5,12 +5,22 @@ namespace GameOfLife.Test;
 public class WorldTest
 {
     [Theory]
+    [InlineData("1,0,0|0,0,a|0,1,0")]
+    [InlineData("1;0,0|0,0,1|0,1,0")]
+    [InlineData("1,0,0#0,0,1#0,1,0")]
+    [InlineData("Lorem ipsum")]
+    [InlineData("1234567890")]
+    public void TestInvalidWorld(string world)
+    {
+        Assert.Throws<ArgumentException>(() => new World(world));
+    }
+
+    [Theory]
     [InlineData("0,0,0,0,0|0,1,0,1,1|1,0,0,0,1", "0,0,0,0,0\n0,1,0,1,1\n1,0,0,0,1")]
     [InlineData("0,0,0|0,0,0|0,0,0", "0,0,0\n0,0,0\n0,0,0")]
     [InlineData("1,0,0|0,0,1|0,1,0", "1,0,0\n0,0,1\n0,1,0")]
     [InlineData("1|0|1", "1\n0\n1")]
     [InlineData("0", "0")]
-    [InlineData("", "0")]
     public void TestWorldCreation(string world, string expectedWorld)
     {
         var sut = new World(world);
@@ -19,7 +29,8 @@ public class WorldTest
     }
 
     [Theory]
-    [InlineData("", "0")]
+    [InlineData("0", "0")]
+    [InlineData("10", "0")]
     [InlineData("1,0|0,1", "0,0\n0,0")]
     [InlineData("1,1|1,0", "1,1\n1,1")]
     [InlineData("1,1|1,1", "1,1\n1,1")]

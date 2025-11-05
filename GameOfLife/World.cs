@@ -1,4 +1,6 @@
-﻿namespace GameOfLife;
+﻿using System.Text.RegularExpressions;
+
+namespace GameOfLife;
 
 public class World
 {
@@ -6,6 +8,9 @@ public class World
 
     public World(string world)
     {
+        if (!Regex.IsMatch(world, @"^[0-1|,]+$"))
+            throw new ArgumentException("Invalid world");
+
         _world = world.Split('|').Select(row => row.Split(',').Select(cell => cell == "1").ToArray()).ToArray();
     }
 
